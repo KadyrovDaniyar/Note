@@ -11,53 +11,67 @@ namespace Nota
                 Console.WriteLine("Задайте размер такта:");
             }
 
-            string a = Console.ReadLine();
+            string line = Console.ReadLine();
 
-            if (a.Contains('/'))
+            double tactSize = 0;
+
+            if (line.Contains('/'))
             {
-                string[] c = a.Split('/');
+                string[] c = line.Split('/');
 
-                foreach(a in )
+                bool first = Int32.TryParse(c[0], out int aa);
+                bool second = Int32.TryParse(c[1], out int bb);
+
+                tactSize = (double) aa / bb;
+            }
+            else
+            {
+                bool intRight = Double.TryParse(line, out tactSize);
             }
 
-            bool intRight = Double.TryParse(Console.ReadLine(), out double tactSize);
+            Console.WriteLine("Задайте нотный стан:");
+            string noteStan = Console.ReadLine();
 
-            if (intRight)
+            if (noteStan.Length == 0)
             {
-                Console.WriteLine("Задайте нотный стан:");
-                string noteStan = Console.ReadLine();
-                
-                if (noteStan.Length == 0)
+                Console.WriteLine("Нотный стан пустой");
+            }
+
+            string[] noteLine = noteStan.Split(' ');
+
+            double sumOneTact = 0;
+
+            for (int i = 0; i < noteLine.Length; i++)
+            {
+                var b = Int32.TryParse(noteLine[i], out int c);
+
+                if (b)
                 {
-                    Console.WriteLine("Нотный стан пустой");
+                    sumOneTact += (double)1 / c;
                 }
 
-                string[] noteLine = noteStan.Split(' ');
-
-                double sumOneTact = 0;
-
-                foreach(var a in noteLine)
+                if (i == noteLine.Length-1)
                 {
-
-                    if (a == "|")
+                    if (sumOneTact != tactSize)
                     {
-                       if (sumOneTact != tactSize)
-                        {
-                            var dif = sumOneTact - tactSize;
-                            Console.WriteLine("Длина такта на " + Math.Abs(dif) + "больше размера такта");
-                        }
-                    }
-
-                    var b = Int32.TryParse(a, out int c);
-
-                    if (b)
-                    { 
-                        sumOneTact += (double)1/c; 
+                        var dif = sumOneTact - tactSize;
+                        Console.WriteLine("Длина такта на " + Math.Abs(dif) + " больше размера такта");
+                        break;
                     }
                 }
 
+                if (noteLine[i] == "|")
+                {
+                    if (sumOneTact != tactSize)
+                    {
+                        var dif = sumOneTact - tactSize;
+                        Console.WriteLine("Длина такта на " + Math.Abs(dif) + " больше размера такта");
+                        break;
+                    }
+                    sumOneTact = 0;
+                }
             }
-            
+
         }
     }
 }
