@@ -50,24 +50,16 @@ namespace Nota
                     sumOneTact += (double)1 / c;
                 }
 
-                if (i == noteLine.Length-1)
+                if (noteLine[i] == "|" || i == noteLine.Length - 1)
                 {
-                    if (sumOneTact != tactSize)
-                    {
-                        var dif = sumOneTact - tactSize;
-                        Console.WriteLine("Длина такта на " + Math.Abs(dif) + " больше размера такта");
-                        break;
-                    }
-                }
-
-                if (noteLine[i] == "|")
-                {
-                    if (sumOneTact != tactSize)
-                    {
-                        var dif = sumOneTact - tactSize;
-                        Console.WriteLine("Длина такта на " + Math.Abs(dif) + " больше размера такта");
-                        break;
-                    }
+                    if (sumOneTact > tactSize)
+                        {
+                            Console.WriteLine("Длина такта на " + Math.Abs(dif) + " больше размера такта");
+                        }
+                    else
+                        {
+                            Console.WriteLine("Длина такта на " + Math.Abs(dif) + " меньше размера такта");
+                        }
                     sumOneTact = 0;
                 }
             }
