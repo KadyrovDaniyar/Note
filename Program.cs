@@ -52,14 +52,19 @@ namespace Nota
 
                 if (noteLine[i] == "|" || i == noteLine.Length - 1)
                 {
-                    if (sumOneTact > tactSize)
+                    if (sumOneTact != tactSize)
+                    {
+                        var dif = sumOneTact - tactSize;
+                        if (sumOneTact > tactSize)
                         {
                             Console.WriteLine("Длина такта на " + Math.Abs(dif) + " больше размера такта");
                         }
-                    else
+                        else
                         {
                             Console.WriteLine("Длина такта на " + Math.Abs(dif) + " меньше размера такта");
                         }
+                        break;
+                    }
                     sumOneTact = 0;
                 }
             }
