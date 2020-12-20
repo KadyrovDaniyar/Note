@@ -2,7 +2,7 @@ using System;
 
 namespace Nota
 {
-    class Program
+    public class NotaMusic
     {
         static void Main(string[] args)
         {
@@ -13,30 +13,46 @@ namespace Nota
 
             string line = Console.ReadLine();
 
-            double tactSize = 0;
+            double tactSize;
+
+            bool first = false;
+            bool second = false;
+            bool intRight = false;
 
             if (line.Contains('/'))
             {
                 string[] c = line.Split('/');
 
-                bool first = Int32.TryParse(c[0], out int aa);
-                bool second = Int32.TryParse(c[1], out int bb);
+                first = Int32.TryParse(c[0], out int aa);
+                second = Int32.TryParse(c[1], out int bb);
 
-                tactSize = (double) aa / bb;
+                tactSize = (double)aa / bb;
             }
             else
             {
-                bool intRight = Double.TryParse(line, out tactSize);
+                intRight = Double.TryParse(line, out tactSize);
             }
 
-            Console.WriteLine("Задайте нотный стан:");
-            string noteStan = Console.ReadLine();
-
-            if (noteStan.Length == 0)
+            if ((first && second) || intRight)
             {
-                Console.WriteLine("Нотный стан пустой");
-            }
+                Console.WriteLine("Задайте нотный стан:");
+                string noteStan = Console.ReadLine();
 
+                if (noteStan.Length == 0)
+                {
+                    Console.WriteLine("Нотный стан пустой");
+                }
+
+                Console.WriteLine(NotaCheck(tactSize, noteStan));
+            }
+            else
+            {
+                Console.WriteLine("Нотный стан должен быть числом или дробью");
+            }
+        }
+
+        public static string NotaCheck(double tactSize, string noteStan)
+        {
             string[] noteLine = noteStan.Split(' ');
 
             double sumOneTact = 0;
@@ -57,18 +73,18 @@ namespace Nota
                         var dif = sumOneTact - tactSize;
                         if (sumOneTact > tactSize)
                         {
-                            Console.WriteLine("Длина такта на " + Math.Abs(dif) + " больше размера такта");
+                            return ("Длина такта на " + Math.Abs(dif) + " больше размера такта");
                         }
                         else
                         {
-                            Console.WriteLine("Длина такта на " + Math.Abs(dif) + " меньше размера такта");
+                            return ("Длина такта на " + Math.Abs(dif) + " меньше размера такта");
                         }
-                        break;
                     }
                     sumOneTact = 0;
                 }
             }
 
+            return "Ok";
         }
     }
 }
